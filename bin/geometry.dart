@@ -1,9 +1,3 @@
-import 'dart:io';
-
-void main() {
-  print(Thing.parse(GeometryIterator(stdin.readLineSync()!.runes.iterator)));
-}
-
 class GeometryIterator implements Iterator {
   final Iterator<int> _iterator;
   GeometryIterator(this._iterator) {
@@ -85,6 +79,14 @@ class Thing {
         return ValueOf(Angle(a, b, c));
       }
     }
+    if (char1 == 94) {
+        // ^
+        iterator.moveNext();
+        Point a = iterator.getPoint();
+        Point b = iterator.getPoint();
+        Point c = iterator.getPoint();
+        return Triangle(a, b, c);
+      }
     throw UnimplementedError();
   }
 }
@@ -132,6 +134,15 @@ class Angle extends Measurable {
   const Angle(this.a, this.b, this.c);
 
   String toString() => '∠$a$b$c';
+}
+
+class Triangle extends Measurable {
+  final Point a;
+  final Point b;
+  final Point c;
+  const Triangle(this.a, this.b, this.c);
+
+  String toString() => '△$a$b$c';
 }
 
 class ValueOf extends Thing {
