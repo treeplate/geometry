@@ -22,11 +22,7 @@ class SymmetricProperty<T extends Thing> extends EqualityProof<T> {
 
   String toString() => 'Symmetric Property: Because $b == $a, $a == $b';
 
-  SymmetricProperty(this.a, this.b, this.b_a) {
-    if (b_a.a != b || b_a.b != a) {
-      throw StateError('Invalid SymmetricProperty equality proof');
-    }
-  }
+  SymmetricProperty(this.b_a): a = b_a.b, b = b_a.a;
 }
 
 class TransitiveProperty<T extends Thing> extends EqualityProof<T> {
@@ -34,12 +30,12 @@ class TransitiveProperty<T extends Thing> extends EqualityProof<T> {
   final T mid;
   final T b;
   final EqualityProof<T> a_mid;
-  final EqualityProof<T> b_mid;
+  final EqualityProof<T> mid_b;
   String toString() => 'Transitive Property: Because $a == $mid and $b == $mid, $a == $b';
 
-  TransitiveProperty(this.a, this.mid, this.b, this.a_mid, this.b_mid) {
-    if (a_mid.a != a || a_mid.b != mid || b_mid.a != b || b_mid.b != mid) {
-      throw StateError('Invalid TransitiveProperty equality proof');
+  TransitiveProperty(this.a_mid, this.mid_b): a = a_mid.a, mid = a_mid.b, b = mid_b.b {
+     if (a_mid.a != mid_b.b) {
+      throw StateError('Invalid TransitiveProperty equality proof (a_mid.b: ${a_mid.b}, mid_b.a: ${mid_b.a})');
     }
   }
 }

@@ -70,7 +70,8 @@ class Thing {
     }
     if (char1 == 109) {
       // m
-      if (char1 == 60) {
+      iterator.moveNext();
+      if (iterator.current == 60) {
         // <
         iterator.moveNext();
         Point a = iterator.getPoint();
